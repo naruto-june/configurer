@@ -17,8 +17,8 @@ var (
 )
 
 func init() {
-	flag.StringVar(&cmdEnv, "e", "online", "指定环境变量")
-	flag.StringVar(&cmdKey, "k", "192.168.0.21_6601", "某环境下的指定key")
+	flag.StringVar(&cmdEnv, "e", "sandbox", "指定环境变量")
+	flag.StringVar(&cmdKey, "k", "", "某环境下的指定key")
 
 	cnf.ConfFile = make(map[string]string, 0)
 }
