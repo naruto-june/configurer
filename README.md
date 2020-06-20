@@ -46,7 +46,7 @@ configurer.toml或configurer.yaml中统一管理不同环境不同配置，旨�
         ...
 
         //获取个性化配置文件的具体内容 指定文件名称是无后缀的文件名称 比如：kafka_consumer_conf.json 和 kafka_consumer_conf1.json 和   kafka_consumer_conf2.json 使用 kafka_consumer_conf获取
-        fContent，err = GetConfByFName("kafka_consumer_conf")
+        fContent，err = configurer.GetConfByFName("kafka_consumer_conf")
         // 根据具体业务解析fContent得到应用的具体配置
         ...
     }
