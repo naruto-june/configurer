@@ -1,0 +1,19 @@
+{
+    "name":"kafka_monitor_conf1",
+    "ver":12345,
+    "rows":[
+        {
+            "value":null,
+            "hello":"xxxxxxxyyyy"
+        },
+        {
+            "name":"yyyy",
+            "value":33333,
+            "hello":"bbbbb",
+            "ccc":{
+                "ddd":"xxx",
+                "eee":"xxx"
+            }
+        }
+    ]
+}

@@ -1,0 +1,8 @@
+<seelog levels="trace,debug,info,warn,error,critical">
+    <outputs formatid="main">
+        <rollingfile formatid="main" type="size" filename="../logs/log.text" maxsize="104857600" maxrolls="5"/>
+    </outputs>
+    <formats>
+        <format id="main" format="%Date %Time [%Level] [%Func] %Msg [%RelFile:%Line]%n"/>
+    </formats>
+</seelog>

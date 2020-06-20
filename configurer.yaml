@@ -1,0 +1,25 @@
+---
+common_conf_item: # 公共配置项
+  max_log_files: 3
+  single_log_max_size: 104857600
+common_conf_file: # 公共配置文件
+  seelog.xml: 1
+individual_conf_file:  # 个性化配置
+  online: #如果子项files中配置路径只含有文件名称，不含有目录路径，则默认online作为子项files中配置的父目录
+    files:
+      - kafka_consumer_conf.json
+      - kafka_producer_conf.json
+      - kafka_monitor_conf.json
+    hosts:
+      192.168.0.21_6601:
+        suffix: "1"  # 对应的个性化配置文件为 kafka_consumer_conf1.json,kafka_producer_conf1.json,kafka_monitor_conf1.json 即位于文件名与扩展名之间
+  sandbox: #如果子项files中配置路径只含有文件名称，不含有目录路径，则默认sandbox作为子项files中配置的父目录
+    files:
+      - kafka_consumer_conf.json  #基础文件必须存在，在基础文件上再支持扩展
+      - kafka_producer_conf.json
+      - kafka_monitor_conf.json
+    hosts:
+      192.168.0.21_6601:
+        suffix: ""  # 对应的个性化配置文件为 kafka_consumer_conf.json,kafka_producer_conf.json,kafka_monitor_conf.json   无后缀可不配置 默认无后缀
+      192.168.0.21_6601:
+        suffix: "2"  # 对应的个性化配置文件为 kafka_consumer_conf.json,kafka_producer_conf.json,kafka_monitor_conf.json   无后缀可不配置 默认无后缀

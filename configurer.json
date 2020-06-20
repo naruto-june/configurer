@@ -1,0 +1,36 @@
+{
+    "common_conf_item" : {
+        "single_log_max_size":"104857600",
+        "max_log_files": "3"
+    },
+    "common_conf_file": {
+        "seelog.xml" : "1"
+    },
+    "individual_conf_file" : {
+        "sandbox":{
+            "files": [
+                "kafka_consumer_conf.json",
+                "kafka_producer_conf.json",
+                "kafka_monitor_conf.json"
+            ],
+            "hosts" : {
+                "192.168.0.21_6601" :  {
+                    "suffix" : "2"
+                }
+            }
+        },
+        "online":{
+            "files": [
+                "kafka_consumer_conf.json",
+                "kafka_producer_conf.json",
+                "kafka_monitor_conf.json"
+            ],
+            "hosts" : {
+                "192.168.0.21_6601" :  {
+                    "suffix" : "1"
+                }
+            }
+            
+        }
+    }
+}
