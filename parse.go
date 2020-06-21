@@ -240,6 +240,8 @@ func ParseConf(fname string) error {
 					}
 				}
 			}
+		} else {
+			return errors.New("cmdEnv required")
 		}
 	}
 	return nil
