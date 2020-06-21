@@ -4,8 +4,8 @@ import (
 	"bufio"
 	"errors"
 	"flag"
-	"fmt"
 	"io"
+	"net"
 	"os"
 	"path"
 	"path/filepath"
@@ -33,6 +33,25 @@ type filePathInfo struct {
 	dirPath  string
 	fileName string
 	fileExt  string
+}
+
+func getIps() error {
+	addrs, err := net.InterfaceAddrs()
+	if nil != err {
+		return err
+	}
+
+	ips = make([]string, 0)
+	for _, address := range addrs {
+		// 检查ip地址判断是否回环地址
+		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+			if nil != ipnet.IP.To4() {
+				ips = append(ips, ipnet.IP.String())
+			}
+		}
+	}
+
+	return nil
 }
 
 func parsePath(filePath string) (f *filePathInfo, e error) {
@@ -95,7 +114,10 @@ func addConfFile(fileFullName, fileName string) error {
 func ParseConf(fname string) error {
 	flag.Parse()
 
-	fmt.Println(cmdKey)
+	err := getIps()
+	if nil != err {
+		return err
+	}
 
 	tmp, err := parsePath(fname)
 	if nil != err {
@@ -147,9 +169,34 @@ func ParseConf(fname string) error {
 
 					// 支持扩展配置
 					if 0 < len(item.Hosts) {
-						for ik, iv := range item.Hosts {
-							if "" != iv.Suffix && cmdKey == ik {
-								fileFullName := t.dirPath + t.fileName + iv.Suffix + "." + t.fileExt
+						if "" == cmdKey {
+							var IP string
+							var HI hostItem
+							for _, iv := range ips {
+								if "" == IP {
+									for iik := range item.Hosts {
+										if iv == iik {
+											IP = iv
+											HI = item.Hosts[iik]
+											break
+										}
+									}
+								}
+								break
+							}
+
+							if "" == IP { // 无匹配则默认基本配置文件
+								fileFullName := iv
+								if "" == t.dirPath {
+									fileFullName = k + "/" + fileFullName
+								}
+
+								err = addConfFile(fileFullName, t.fileName)
+								if nil != err {
+									return err
+								}
+							} else { // 扩展配置
+								fileFullName := t.dirPath + t.fileName + HI.Suffix + "." + t.fileExt
 								if "" == t.dirPath {
 									fileFullName = k + "/" + fileFullName
 								}
@@ -159,8 +206,28 @@ func ParseConf(fname string) error {
 									return err
 								}
 							}
+						} else { // 扩展配置
+							flag := false
+							for ik, iv := range item.Hosts {
+								if "" != iv.Suffix && cmdKey == ik {
+									flag = true
+									fileFullName := t.dirPath + t.fileName + iv.Suffix + "." + t.fileExt
+									if "" == t.dirPath {
+										fileFullName = k + "/" + fileFullName
+									}
+
+									err = addConfFile(fileFullName, t.fileName)
+									if nil != err {
+										return err
+									}
+								}
+							}
+
+							if false == flag {
+								return errors.New("no matched cmdKey")
+							}
 						}
-					} else {
+					} else { // 则默认基本配置文件
 						fileFullName := iv
 						if "" == t.dirPath {
 							fileFullName = k + "/" + fileFullName

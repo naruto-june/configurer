@@ -14,6 +14,7 @@ var (
 	cmdEnv string
 	cmdKey string
 	cnf    conf
+	ips    []string
 )
 
 func init() {
