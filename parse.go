@@ -19,8 +19,9 @@ type hostItem struct {
 }
 
 type envConfItem struct {
-	Files []string            `json:"files,omitempty" yaml:"files,omitempty" toml:"files,omitempty"`
-	Hosts map[string]hostItem `json:"hosts,omitempty" yaml:"hosts,omitempty" toml:"hosts,omitempty"`
+	ConfFile string              `json:"conf_file,omitempty" yaml:"conf_file,omitempty" toml:"conf_file,omitempty"`
+	Files    []string            `json:"files,omitempty" yaml:"files,omitempty" toml:"files,omitempty"`
+	Hosts    map[string]hostItem `json:"hosts,omitempty" yaml:"hosts,omitempty" toml:"hosts,omitempty"`
 }
 
 type configure struct {
@@ -161,6 +162,37 @@ func ParseConf(fname string) error {
 		if k == cmdEnv {
 			item := mcnf.ICF[k]
 			if 0 < len(item.Files) {
+				// 解析conf-file并设置到common-conf-item中
+				if "" != item.ConfFile {
+					t, err := parsePath(item.ConfFile)
+					if nil != err {
+						return err
+					}
+
+					fileFullName := t.dirPath + t.fileName + "." + t.fileExt
+					if "" == t.dirPath {
+						fileFullName = k + "/" + fileFullName
+					}
+					tfi, err := os.Open(fileFullName)
+					if err != nil {
+						return err
+					}
+					defer tfi.Close()
+					td, err := edcoder.NewDecoder(edcoder.SetDecoderExt(t.fileExt), edcoder.SetDecoderReader(tfi))
+					if nil != err {
+						return err
+					}
+					var c map[string]interface{}
+					err = td.Decode(&c)
+					if nil != err {
+						return err
+					}
+					for ck, cv := range c {
+						cnf.CommonConfItem[ck] = cv
+					}
+				}
+
+				// 解析files和hosts
 				for _, iv := range item.Files {
 					t, err := parsePath(iv)
 					if nil != err {
