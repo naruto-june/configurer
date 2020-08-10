@@ -111,9 +111,19 @@ func addConfFile(fileFullName, fileName string) error {
 	return nil
 }
 
+func resetConf() {
+	cnf.ConfFile = nil
+	cnf.CommonConfItem = nil
+}
+
 // ParseConf 解析配置的配置
-func ParseConf(fname string) error {
-	flag.Parse()
+func ParseConf(fname string, reload bool) error {
+	if false == reload {
+		flag.Parse()
+	}
+
+	// 重置配置
+	resetConf()
 
 	err := getIps()
 	if nil != err {
