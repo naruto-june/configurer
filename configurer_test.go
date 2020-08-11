@@ -7,7 +7,7 @@ import (
 )
 
 func TestConfigurerJson(t *testing.T) {
-	err := ParseConf("configurer.json")
+	err := ParseConf("configurer.json", false)
 	if nil != err {
 		fmt.Println(err)
 	}
@@ -20,7 +20,7 @@ func TestConfigurerJson(t *testing.T) {
 }
 
 func TestConfigurerYaml(t *testing.T) {
-	err := ParseConf("configurer.yaml")
+	err := ParseConf("configurer.yaml", false)
 	if nil != err {
 		fmt.Println(err)
 	}
@@ -33,7 +33,7 @@ func TestConfigurerYaml(t *testing.T) {
 }
 
 func TestConfigurerToml(t *testing.T) {
-	err := ParseConf("configurer.toml")
+	err := ParseConf("configurer.toml", false)
 	if nil != err {
 		fmt.Println(err)
 	}
