@@ -114,6 +114,8 @@ func addConfFile(fileFullName, fileName string) error {
 func resetConf() {
 	cnf.ConfFile = nil
 	cnf.CommonConfItem = nil
+	
+	cnf.ConfFile = make(map[string]string, 0)
 }
 
 // ParseConf 解析配置的配置
