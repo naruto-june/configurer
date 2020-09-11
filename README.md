@@ -7,13 +7,13 @@
 ```
     |
     |----online: 线上环境的所有配置汇集处 (测试用例中使用）
-    |        |-------kafka_consumer_conf.json   消费者配置 kafka_consumer_conf1.json 和   kafka_consumer_conf2.json 同环境下的扩展配置
-    |        |-------kafka_monitor_conf.json    监控配置 kafka_monitor_conf1.json 和 kafka_monitor_conf2.json 同环境下的扩展配置
-    |        |-------kafka_producer_conf.json   生产者配置 kafka_producer_conf1.json 和 kafka_producer_conf2.json  同环境下的扩展配置
+    |        |-------kafka_consumer_conf.json 消费者配置 kafka_consumer_conf1.json 和 kafka_consumer_conf2.json 同环境下的扩展配置
+    |        |-------kafka_monitor_conf.json  监控配置 kafka_monitor_conf1.json 和 kafka_monitor_conf2.json 同环境下的扩展配置
+    |        |-------kafka_producer_conf.json 生产者配置 kafka_producer_conf1.json 和 kafka_producer_conf2.json  同环境下的扩展配置
     |----sandbox: 测试环境的所有配置汇集处  (测试用例中使用）
-    |        |-------kafka_consumer_conf.json   消费者配置 kafka_consumer_conf1.json 和   kafka_consumer_conf2.json 同环境下的扩展配置
-    |        |-------kafka_monitor_conf.json    监控配置 kafka_monitor_conf1.json 和 kafka_monitor_conf2.json 同环境下的扩展配置
-    |        |-------kafka_producer_conf.json   生产者配置 kafka_producer_conf1.json 和 kafka_producer_conf2.json  同环境下的扩展配置
+    |        |-------kafka_consumer_conf.json 消费者配置 kafka_consumer_conf1.json 和 kafka_consumer_conf2.json 同环境下的扩展配置
+    |        |-------kafka_monitor_conf.json  监控配置 kafka_monitor_conf1.json 和 kafka_monitor_conf2.json 同环境下的扩展配置
+    |        |-------kafka_producer_conf.json 生产者配置 kafka_producer_conf1.json 和 kafka_producer_conf2.json  同环境下的扩展配置
     |----seelog.xml 不同环境的共用配置文件 (测试用例中使用）
     |----configurer.json/configurer.toml/configurer.yaml 不同环境不同配置的统一管理配置处   (注意：需要置于自己项目根目录下）
     |----configurer.go + parse.go  项目库的代码
